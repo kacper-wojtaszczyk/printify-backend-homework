@@ -1,0 +1,32 @@
+security:
+    encoders:
+        KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Security\User: sha512
+    providers:
+        domain_user_provider:
+            id: KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Security\UserProvider
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        doc:
+            pattern: ^/$|^/api/doc
+            security: false
+        login:
+            pattern:  ^/api/authorize
+            stateless: true
+            anonymous: true
+            json_login:
+                check_path:               /api/authorize
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+        api:
+            pattern:   ^/api
+            stateless: true
+            security: true
+            guard:
+                provider: domain_user_provider
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+    access_control:
+        - { path: '^/api/authorize', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/api', roles: IS_AUTHENTICATED_FULLY }

@@ -1,6 +1,14 @@
 {
     "type": "project",
-    "license": "proprietary",
+    "license": "GPL-3.0",
+    "name": "kacper-wojtaszczyk/printify-backend-homework",
+    "description": "Simple webstore api",
+    "authors": [
+        {
+            "name": "Kacper Wojtaszczyk",
+            "email": "kacper.wojtaszczyk95@gmail.com"
+        }
+    ],
     "require": {
         "php": "^7.3.0",
         "ext-ctype": "*",
@@ -8,6 +16,9 @@
         "doctrine/doctrine-bundle": "^1.11",
         "doctrine/doctrine-migrations-bundle": "^2.1",
         "doctrine/orm": "^2.6",
+        "lexik/jwt-authentication-bundle": "^2.6",
+        "nelmio/api-doc-bundle": "^3.4",
+        "symfony/asset": "4.3.*",
         "symfony/console": "4.3.*",
         "symfony/dotenv": "4.3.*",
         "symfony/expression-language": "4.3.*",
@@ -16,6 +27,8 @@
         "symfony/framework-bundle": "4.3.*",
         "symfony/messenger": "4.3.*",
         "symfony/monolog-bundle": "^3.5",
+        "symfony/security-bundle": "4.3.*",
+        "symfony/twig-pack": "^1.0",
         "symfony/yaml": "4.3.*"
     },
     "require-dev": {
@@ -33,12 +46,12 @@
     },
     "autoload": {
         "psr-4": {
-            "PrintifyBackendHomework\\": "src/"
+            "KacperWojtaszczyk\\PrintifyBackendHomework\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "PrintifyBackendHomework\\Tests\\": "tests/"
+            "KacperWojtaszczyk\\PrintifyBackendHomework\\Tests\\": "tests/"
         }
     },
     "replace": {
