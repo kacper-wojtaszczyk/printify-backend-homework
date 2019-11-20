@@ -3,7 +3,7 @@ Create a tiny RESTful web service with the following business requirements:
 ## Application must expose REST API endpoints for the following functionality:
 
 * create product (price, productType, color, size)
-* calculate order price (Collection of products and quiantities)  (should also save Order draft somewhere)
+* calculate order price (Collection of products and quantities)  (should also save Order draft somewhere)
 * list all Orders
 * list all Orders by productType
 

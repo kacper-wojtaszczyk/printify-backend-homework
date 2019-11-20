@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace KacperWojtaszczyk\PrintifyBackendHomework\Model\Product;
 
 use Doctrine\ORM\Mapping as ORM;
+use KacperWojtaszczyk\PrintifyBackendHomework\Model\Price;
 
 /**
  * @ORM\Entity(repositoryClass="KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Repository\Product\ProductRepository")
@@ -46,8 +47,6 @@ final class Product
      * @var string
      */
     private $size;
-
-
 
 
     public static function withParameters(

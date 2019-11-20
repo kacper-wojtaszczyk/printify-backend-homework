@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace KacperWojtaszczyk\PrintifyBackendHomework\Model\Product;
+namespace KacperWojtaszczyk\PrintifyBackendHomework\Model;
 
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\ValueObject;
 use Money\Currency;
