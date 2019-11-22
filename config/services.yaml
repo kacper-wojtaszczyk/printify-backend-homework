@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     currency: '%env(CURRENCY)%'
+    fallback_country: 'US'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -22,5 +23,9 @@ services:
             - '%currency%'
 
     KacperWojtaszczyk\PrintifyBackendHomework\Application\Controller\Rest\Order: ~
+
+    KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Provider\ApilityCountryProvider:
+        arguments:
+            - '@eight_points_guzzle.client.apility'
 
 

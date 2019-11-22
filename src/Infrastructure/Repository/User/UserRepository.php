@@ -38,4 +38,11 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
             ->setParameter('id', (string) $userId)
             ->getQuery()->getOneOrNullResult();
     }
+
+    public function save(User $user): void
+    {
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+    }
 }

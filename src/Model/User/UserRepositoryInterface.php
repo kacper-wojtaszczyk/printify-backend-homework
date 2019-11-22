@@ -9,4 +9,5 @@ interface UserRepositoryInterface
 {
     public function findOneByEmailAddress(EmailAddress $email): ?User;
     public function findOneByUserId(UserId $userId): ?User;
+    public function save(User $user): void;
 }

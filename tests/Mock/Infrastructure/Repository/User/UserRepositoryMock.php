@@ -65,4 +65,10 @@ class UserRepositoryMock implements UserRepositoryInterface
             $this->usersByEmail->set((string) $email, $user);
         }
     }
+
+    public function save(User $user): void
+    {
+        $this->usersById->set((string)$user->getId(), $user);
+        $this->usersByEmail->set((string)$user->getEmail(), $user);
+    }
 }

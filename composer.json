@@ -2,7 +2,7 @@
     "type": "project",
     "license": "GPL-3.0",
     "name": "kacper-wojtaszczyk/printify-backend-homework",
-    "description": "Simple webstore api",
+    "description": "Simple web store api",
     "authors": [
         {
             "name": "Kacper Wojtaszczyk",
@@ -16,6 +16,9 @@
         "doctrine/doctrine-bundle": "^1.11",
         "doctrine/doctrine-migrations-bundle": "^2.1",
         "doctrine/orm": "^2.6",
+        "eightpoints/guzzle-bundle": "^7.6",
+        "guzzlehttp/guzzle": "^6.4",
+        "guzzlehttp/psr7": "^1.6",
         "lexik/jwt-authentication-bundle": "^2.6",
         "moneyphp/money": "^3.2",
         "ramsey/uuid": "3.8.*",
@@ -28,7 +31,8 @@
         "symfony/monolog-bundle": "^3.5",
         "symfony/security-bundle": "4.3.*",
         "symfony/validator": "4.3.*",
-        "symfony/yaml": "4.3.*"
+        "symfony/yaml": "4.3.*",
+        "ext-json": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.4",
