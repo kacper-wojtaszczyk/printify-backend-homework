@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace KacperWojtaszczyk\PrintifyBackendHomework\Model\Product;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use KacperWojtaszczyk\PrintifyBackendHomework\Model\Order\OrderItem;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\Price;
 
 /**
@@ -47,6 +49,12 @@ final class Product
      * @var string
      */
     private $size;
+
+    /**
+     * @ORM\OneToMany(targetEntity="OrderItem", mappedBy="product")
+     * @var ArrayCollection|OrderItem[]
+     */
+    private $orderItem;
 
 
     public static function withParameters(

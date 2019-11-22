@@ -3,27 +3,66 @@ declare(strict_types=1);
 
 namespace KacperWojtaszczyk\PrintifyBackendHomework\Tests\Mock\Infrastructure\Repository\User;
 
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Common\Collections\ArrayCollection;
+use Faker\Factory;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\User\EmailAddress;
+use KacperWojtaszczyk\PrintifyBackendHomework\Model\User\Password;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\User\User;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\User\UserId;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\User\UserRepositoryInterface;
 
 class UserRepositoryMock implements UserRepositoryInterface
 {
-    public function __construct(ManagerRegistry $registry)
-    {
+    /**
+     * @var ArrayCollection
+     */
+    private $usersById;
 
+    /**
+     * @var ArrayCollection
+     */
+    private $usersByEmail;
+
+    /**
+     * @var \Faker\Generator
+     */
+    private $faker;
+
+    public function __construct()
+    {
+        $this->faker = Factory::create();
+        $this->mockUsers(1);
     }
+
 
     public function findOneByEmailAddress(EmailAddress $email): ?User
     {
-        return ;
+        return $this->usersByEmail->get((string) $email);
     }
 
     public function findOneByUserId(UserId $userId): ?User
     {
-        return ;
+        return $this->usersById->get((string) $userId);
+    }
+
+    public function getKeys(): array
+    {
+        return $this->usersById->getKeys();
+    }
+
+    private function mockUsers(int $count): void
+    {
+        $this->usersById = new ArrayCollection();
+        $this->usersByEmail = new ArrayCollection();
+        for($i = 0; $i <$count; $i++)
+        {
+            $email = new EmailAddress($this->faker->email);
+            $password = new Password($this->faker->password);
+            $userId = UserId::fromEmail($email);
+
+            $user = User::withCredentials($userId, $email, $password);
+            $this->usersById->set((string) $userId, $user);
+            $this->usersByEmail->set((string) $email, $user);
+        }
     }
 }

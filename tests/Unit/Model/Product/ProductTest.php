@@ -6,8 +6,8 @@ namespace KacperWojtaszczyk\PrintifyBackendHomework\Unit\Model\User;
 
 
 use Faker\Factory;
+use KacperWojtaszczyk\PrintifyBackendHomework\Model\Price;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\Color;
-use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\Price;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\Product;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\ProductId;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\ProductType;

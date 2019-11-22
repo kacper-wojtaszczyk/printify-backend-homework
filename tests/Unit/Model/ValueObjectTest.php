@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace KacperWojtaszczyk\PrintifyBackendHomework\Unit\Model\User;
 
 use Faker\Factory;
+use KacperWojtaszczyk\PrintifyBackendHomework\Model\Order\Country;
+use KacperWojtaszczyk\PrintifyBackendHomework\Model\Order\OrderId;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\Color;
-use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\Price;
+use KacperWojtaszczyk\PrintifyBackendHomework\Model\Price;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\ProductId;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\ProductType;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\Size;
@@ -48,9 +50,6 @@ class ValueObjectTest extends KernelTestCase
 
     public function testCompareProduct()
     {
-        $faker = Factory::create();
-
-        $mock = new ValueObjectMock("MOCK");
 
         $productId = ProductId::generate();
         $currency = $this->faker->currencyCode;
@@ -69,6 +68,18 @@ class ValueObjectTest extends KernelTestCase
         $this->assertFalse($size->equals($this->mock));
         $this->assertTrue((Price::fromMoney($money))->equals($price));
         $this->assertEquals((string) $price, $amount . " " . $currency);
+
+    }
+
+    public function testCompareOrder()
+    {
+
+        $orderId = OrderId::generate();
+        $country = new Country($this->faker->countryCode);
+
+        $this->assertFalse($orderId->equals($this->mock));
+        $this->assertFalse($country->equals($this->mock));
+
 
     }
 }

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\User\User;
 
 /**
- * @ORM\Entity(repositoryClass="KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Repository\Product\OrderRepository")
+ * @ORM\Entity(repositoryClass="KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Repository\Order\OrderRepository")
  */
 final class Order
 {
@@ -39,14 +39,12 @@ final class Order
 
     public static function withParameters(
         OrderId $orderId,
-        Country $country,
-        ArrayCollection $orderItem
+        Country $country
     ): self
     {
         $self = new self;
         $self->id = (string) $orderId;
         $self->country = (string) $country;
-        $self->orderItem = $orderItem;
         return $self;
     }
 
@@ -63,6 +61,12 @@ final class Order
     public function getOrderItem(): ArrayCollection
     {
         return $this->orderItem;
+    }
+
+    public function setOrderItem(ArrayCollection $orderItem): self
+    {
+        $this->orderItem = $orderItem;
+        return $this;
     }
 
     public function getUser(): User
