@@ -13,9 +13,14 @@ services:
 
     KacperWojtaszczyk\PrintifyBackendHomework\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Helper,Kernel.php}'
 
-    KacperWojtaszczyk\PrintifyBackendHomework\Application\Controller\:
-        resource: '../src/Application/Controller'
-        tags: ['controller.service_arguments']
+    KacperWojtaszczyk\PrintifyBackendHomework\Application\Controller\Rest\Product:
+        arguments:
+            - '@form.factory'
+            - '@KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\ProductRepositoryInterface'
+            - '%currency%'
+
+    KacperWojtaszczyk\PrintifyBackendHomework\Application\Controller\Rest\Order: ~
+
 

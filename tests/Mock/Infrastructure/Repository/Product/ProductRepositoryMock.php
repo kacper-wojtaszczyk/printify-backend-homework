@@ -56,4 +56,14 @@ class ProductRepositoryMock implements ProductRepositoryInterface
         }
         return $products;
     }
+
+    public function findOneByTypeColorSize(ProductType $type, Color $color, Size $size): ?Product
+    {
+        return null;
+    }
+
+    public function save(Product $product): void
+    {
+        $this->products->add($product);
+    }
 }

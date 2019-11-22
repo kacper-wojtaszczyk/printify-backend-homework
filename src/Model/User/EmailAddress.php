@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace KacperWojtaszczyk\PrintifyBackendHomework\Model\User;
 
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\ValueObject;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\EmailValidator;
 
 final class EmailAddress implements ValueObject
 {

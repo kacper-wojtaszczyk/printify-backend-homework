@@ -5,9 +5,12 @@ namespace KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Repository\Pr
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\Color;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\Product;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\ProductId;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\ProductRepositoryInterface;
+use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\ProductType;
+use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\Size;
 
 /**
  * @method Product|null find($id, $lockMode = null, $lockVersion = null)
@@ -28,5 +31,26 @@ class ProductRepository extends ServiceEntityRepository implements ProductReposi
             ->where('p.id = :id')
             ->setParameter('id', (string) $productId)
             ->getQuery()->getOneOrNullResult();
+    }
+
+    public function findOneByTypeColorSize(ProductType $type, Color $color, Size $size): ?Product
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.productType = :type')
+            ->andWhere('p.color = :color')
+            ->andWhere('p.size = :size')
+            ->setParameters([
+                'type' => (string) $type,
+                'color' => (string) $color,
+                'size' => (string) $size
+            ])
+            ->getQuery()->getOneOrNullResult();
+    }
+
+    public function save(Product $product): void
+    {
+        $em = $this->getEntityManager();
+        $em->persist($product);
+        $em->flush();
     }
 }

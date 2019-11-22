@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Security;
 
-use KacperWojtaszczyk\PrintifyBackendHomework\Model\User\Exception\ProductNotFoundException;
+use KacperWojtaszczyk\PrintifyBackendHomework\Model\User\EmailAddress;
+use KacperWojtaszczyk\PrintifyBackendHomework\Model\User\Exception\UserNotFoundException;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\User\UserRepositoryInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -23,11 +24,12 @@ final class UserProvider implements UserProviderInterface
 
     public function loadUserByUsername($username): UserInterface
     {
-        if ($user = $this->userRepository->findOneByEmailAddress($username)) {
+        if ($user = $this->userRepository->findOneByEmailAddress(new EmailAddress($username))) {
             return new User((string)$user->getEmail(), (string)$user->getPassword());
         }
 
-        throw ProductNotFoundException::withEmail($username);
+        throw UserNotFoundException::withEmail($username);
+
     }
 
     public function refreshUser(UserInterface $user): UserInterface

@@ -8,4 +8,6 @@ namespace KacperWojtaszczyk\PrintifyBackendHomework\Model\Product;
 interface ProductRepositoryInterface
 {
     public function findOneById(ProductId $email): ?Product;
+    public function findOneByTypeColorSize(ProductType $type, Color $color, Size $size): ?Product;
+    public function save(Product $product): void;
 }

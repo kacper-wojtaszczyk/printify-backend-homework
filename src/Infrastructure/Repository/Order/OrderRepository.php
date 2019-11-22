@@ -9,20 +9,18 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\Order\Order;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\Order\OrderId;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\Order\OrderRepositoryInterface;
-use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\Product;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\ProductType;
 
 /**
  * @method Order|null find($id, $lockMode = null, $lockVersion = null)
  * @method Order|null findOneBy(array $criteria, array $orderBy = null)
- * @method Order[]    findAll()
  * @method Order[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class OrderRepository extends ServiceEntityRepository implements OrderRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Product::class);
+        parent::__construct($registry, Order::class);
     }
 
     public function findOneById(OrderId $orderId): ?Order
@@ -32,6 +30,12 @@ class OrderRepository extends ServiceEntityRepository implements OrderRepository
             ->setParameter('id', (string) $orderId)
             ->setMaxResults(1)
             ->getQuery()->getOneOrNullResult();
+    }
+
+    public function findAll(): ?ArrayCollection
+    {
+        return $this->createQueryBuilder('o')
+            ->getQuery()->execute();
     }
 
     public function findByProductType(ProductType $type): ?ArrayCollection
