@@ -44,7 +44,7 @@ class OrderRepository extends ServiceEntityRepository implements OrderRepository
             ->leftJoin('o.orderItem', 'i')
             ->leftJoin('i.product', 'p')
             ->where('p.productType = :type')
-            ->setParameter('id', (string) $type)
+            ->setParameter('type', (string) $type)
             ->getQuery()->execute());
     }
 

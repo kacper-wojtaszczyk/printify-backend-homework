@@ -1,3 +1,30 @@
+# Running
+
+to run the application clone the repository than run composer install
+````
+composer install
+````
+
+once the install is completed run
+````
+./start.sh
+````
+
+the script will setup jwt cerficates for later authentication, generate db and update schema, create a User for you 
+(the command will ask for email and password) and start a symfony built in server
+
+after the script finishes it will print server's url for. to view API docs visit
+````
+/api/doc
+````
+for swagger documentation.
+
+First thing you have to do is to get a JWT token by calling `/api/authorize` with the credentials you used for creating 
+user. in turn you receive a token that has to be user for every subsequent request in header `Authorization: {token}`.
+it can also be pasted into swagger's authorize popup for testing requests with supplied frontend
+
+
+# Description
 Create a tiny RESTful web service with the following business requirements:
 
 ## Application must expose REST API endpoints for the following functionality:
