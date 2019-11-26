@@ -23,6 +23,12 @@ First thing you have to do is to get a JWT token by calling `/api/authorize` wit
 user. in turn you receive a token that has to be user for every subsequent request in header `Authorization: {token}`.
 it can also be pasted into swagger's authorize popup for testing requests with supplied frontend
 
+## Running test
+
+tests can be run after comproser install by calling:
+````
+bin/phpunit --configuration phpunit.unit.xml
+````
 
 # Description
 Create a tiny RESTful web service with the following business requirements:
