@@ -1,0 +1,17 @@
+eight_points_guzzle:
+    clients:
+        apility:
+            base_url: "%env(APILITY_URL)%"
+            options:
+                debug: false
+                timeout: 2
+                verify: false
+                http_errors: true
+                headers:
+                    Accept: "application/json"
+                    Accept-Charset: "utf-8"
+                    Accept-Encoding: "gzip"
+                    Accept-Language: "en"
+                    Content-Type: "application/json"
+                    Cache-Control: "no-cache"
+            plugin: ~

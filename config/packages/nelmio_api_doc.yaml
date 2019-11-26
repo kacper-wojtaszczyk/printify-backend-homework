@@ -1,0 +1,180 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: PrintifyBackendHomework API
+            description: Simple API for managing stock and orders
+            version: 1.0.0
+        securityDefinitions:
+            Bearer:
+                type: apiKey
+                description: Your Json Web Token
+                scheme: bearer
+                name: Authorization
+                in: header
+        security:
+            - Bearer: []
+        definitions:
+            client_error:
+                type: object
+                properties:
+                    code:
+                        type: integer
+                        required: true
+                        descriptin: http error code
+                        example: 4xx
+                    message:
+                        type: string
+                        required: true
+                        descriptin: error message
+                        example: Something went wrong
+            server_error:
+                type: object
+                properties:
+                    code:
+                        type: integer
+                        required: true
+                        descriptin: http error code
+                        example: 5xx
+                    message:
+                        type: string
+                        required: true
+                        descriptin: error message
+                        example: Something went wrong
+            credentials:
+                type: object
+                properties:
+                    username:
+                        type: string
+                        required: true
+                        description: Username
+                        example: test@example.org
+                    password:
+                        type: string
+                        required: true
+                        description: Password
+                        example: p4ssw0rd
+            authentication:
+                type: object
+                properties:
+                    token:
+                        type: string
+                        required: true
+                        description: JWT token
+                        example: eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6W10sInVzZXJuYW1lIjoidGVzdEBib2xkLm5ldC5wbCIsImlhdCI6MTUyODQ2MzAwOCwiZXhwIjoxNTI4NTQ5NDA4fQ
+            create_product:
+                type: object
+                properties:
+                    price:
+                        type: string
+                        required: true
+                        description: 'Price of the item in "000.00" format'
+                        example: '100.00'
+                    productType:
+                        type: string
+                        required: true
+                        description: 'Type of the product'
+                        example: 'shirt'
+                    color:
+                        type: string
+                        required: true
+                        description: 'Color of the product'
+                        example: 'blue'
+                    size:
+                        type: string
+                        required: true
+                        description: 'Size of the product'
+                        example: 'L'
+            create_product_success:
+                type: object
+                properties:
+                    id:
+                        type: string
+                        required: true
+                        description: 'UUID of created Product'
+                    price:
+                        type: string
+                        required: true
+                        description: 'Price of the item in "000.00" format'
+                    type:
+                        type: string
+                        required: true
+                        description: 'Type of the product'
+                    color:
+                        type: string
+                        required: true
+                        description: 'Color of the product'
+                    size:
+                        type: string
+                        required: true
+                        description: 'Size of the product'
+            create_order:
+                type: object
+                properties:
+                    items:
+                        type: array
+                        required: true
+                        description: 'Order Items'
+                        items:
+                            type: array
+                            $ref: '#/definitions/order_item'
+            order_item:
+                type: object
+                properties:
+                    productId:
+                        type: string
+                        required: true
+                        description: 'UUID identifier of a product'
+                        example: 'bd32155a-c49b-51d3-9b27-9bf627967c51'
+                    quantity:
+                        type: integer
+                        required: true
+                        description: 'quantity of the item'
+                        example: 3
+            order_item_success:
+                type: object
+                properties:
+                    productId:
+                        type: string
+                        description: 'UUID identifier of a product'
+                        example: 'bd32155a-c49b-51d3-9b27-9bf627967c51'
+                    quantity:
+                        type: integer
+                        description: 'quantity of the item'
+                        example: 3
+                    price:
+                        type: string
+                        description: 'price of a single product from this item'
+                        example: '25.00'
+            create_order_success:
+                type: object
+                properties:
+                    id:
+                        type: string
+                        description: 'UUID of created Order'
+                        example: 'bd32155a-c49b-51d3-9b27-9bf627967c51'
+                    total:
+                        type: string
+                        description: 'Total cost of Order'
+                        example: '1350.50'
+                    items:
+                        type: array
+                        description: 'Order Items'
+                        items:
+                            type: array
+                            $ref: '#/definitions/order_item_success'
+            list_order_success:
+                type: array
+                items:
+                    type: array
+                    $ref: '#/definitions/create_order_success'
+            error_message:
+                type: object
+                properties:
+                    code:
+                        type: number
+                        example: 400
+                    message:
+                        type: string
+    areas: # to filter documented areas
+        path_patterns:
+            - ^/api(?!/doc$)

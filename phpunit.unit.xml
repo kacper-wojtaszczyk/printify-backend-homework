@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         backupGlobals="false"
+         colors="true"
+         bootstrap="config/bootstrap.php"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         verbose="true"
+>
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <server name="APP_ENV" value="test" force="true"/>
+        <server name="SHELL_VERBOSITY" value="-1"/>
+        <server name="SYMFONY_PHPUNIT_REMOVE" value=""/>
+        <server name="SYMFONY_PHPUNIT_VERSION" value="6.5"/>
+        <server name="KERNEL_CLASS" value="KacperWojtaszczyk\PrintifyBackendHomework\Kernel"/>
+        <server name="SYMFONY_DEPRECATIONS_HELPER" value="disabled=1"/>
+    </php>
+
+    <testsuites>
+        <testsuite name="PrintifyBackendHomework unit Test Suite">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="PrintifyBackendHomework functional Test Suite">
+            <directory>tests/Functional</directory>
+        </testsuite>
+        <testsuite name="PrintifyBackendHomework integration Test Suite">
+            <directory>tests/Integration</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>src</directory>
+            <exclude>
+                <directory suffix="Exception.php">src</directory>
+                <directory suffix="Interface.php">src</directory>
+                <directory>src/DependencyInjection</directory>
+                <directory>src/Infrastructure/Repository</directory>
+                <file>src/Kernel.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>

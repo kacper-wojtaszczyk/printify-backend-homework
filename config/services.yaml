@@ -4,24 +4,39 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-
+    currency: '%env(CURRENCY)%'
+    fallback_country: 'US'
+    limit_per_second_per_country: 10
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-    App\:
+    KacperWojtaszczyk\PrintifyBackendHomework\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Helper,Kernel.php}'
 
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
-    App\Controller\:
-        resource: '../src/Controller'
+    KacperWojtaszczyk\PrintifyBackendHomework\Application\Controller\Rest\Product:
+        arguments:
+            - '@form.factory'
+            - '@KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\ProductRepositoryInterface'
+            - '%currency%'
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    KacperWojtaszczyk\PrintifyBackendHomework\Application\Controller\Rest\Order:
+        arguments:
+            - '@form.factory'
+            - '@KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\ProductRepositoryInterface'
+            - '@KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Provider\CountryProviderInterface'
+            - '@KacperWojtaszczyk\PrintifyBackendHomework\Model\Order\OrderRequestRepositoryInterface'
+            - '@KacperWojtaszczyk\PrintifyBackendHomework\Model\Order\OrderRepositoryInterface'
+            - '%limit_per_second_per_country%'
+        tags: ['controller.service_arguments']
+
+    KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Provider\ApilityCountryProvider:
+        arguments:
+            - '@eight_points_guzzle.client.apility'
+            - '%fallback_country%'
+
+
