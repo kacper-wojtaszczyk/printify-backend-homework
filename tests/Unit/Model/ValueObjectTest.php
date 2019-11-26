@@ -67,7 +67,7 @@ class ValueObjectTest extends KernelTestCase
         $this->assertFalse($color->equals($this->mock));
         $this->assertFalse($size->equals($this->mock));
         $this->assertTrue((Price::fromMoney($money))->equals($price));
-        $this->assertEquals((string) $price, $amount . " " . $currency);
+        $this->assertEquals(number_format($amount/100, 2, '.', ''), (string) $price);
 
     }
 

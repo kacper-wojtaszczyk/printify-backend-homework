@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 final class AuthorizationController
 {
     /**
-     * @SWG\Tag(name="Autoryzacja")
+     * @SWG\Tag(name="Authorization")
      *
      * @SWG\Parameter(
      *     name="body",

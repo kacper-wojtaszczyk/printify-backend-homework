@@ -34,17 +34,29 @@ class OrderRepository extends ServiceEntityRepository implements OrderRepository
 
     public function findAll(): ?ArrayCollection
     {
-        return $this->createQueryBuilder('o')
-            ->getQuery()->execute();
+        return new ArrayCollection($this->createQueryBuilder('o')
+            ->getQuery()->execute());
     }
 
     public function findByProductType(ProductType $type): ?ArrayCollection
     {
-        return $this->createQueryBuilder('o')
+        return new ArrayCollection($this->createQueryBuilder('o')
             ->leftJoin('o.orderItem', 'i')
             ->leftJoin('i.product', 'p')
             ->where('p.productType = :type')
             ->setParameter('id', (string) $type)
-            ->getQuery()->execute();
+            ->getQuery()->execute());
+    }
+
+    public function save(Order $order): void
+    {
+        $em = $this->getEntityManager();
+        try{
+            $em->persist($order);
+            $em->flush();
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+
     }
 }

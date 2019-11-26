@@ -64,6 +64,19 @@ class UserRepositoryMock implements UserRepositoryInterface
             $this->usersById->set((string) $userId, $user);
             $this->usersByEmail->set((string) $email, $user);
         }
+        $user = $this->mockStaticUserForApi();
+        $this->usersById->set((string) $user->getId(), $user);
+        $this->usersByEmail->set((string) $user->getEmail(), $user);
+    }
+
+    private function mockStaticUserForApi(): User
+    {
+        $email = new EmailAddress('test@example.org');
+        $password = new Password('qwerty');
+        $userId = UserId::fromEmail($email);
+
+        $user = User::withCredentials($userId, $email, $password);
+        return $user;
     }
 
     public function save(User $user): void

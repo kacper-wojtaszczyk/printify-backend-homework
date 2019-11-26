@@ -25,11 +25,11 @@ class ProductRepository extends ServiceEntityRepository implements ProductReposi
         parent::__construct($registry, Product::class);
     }
 
-    public function findOneById(ProductId $productId): ?Product
+    public function findOneById(ProductId $id): ?Product
     {
         return $this->createQueryBuilder('p')
             ->where('p.id = :id')
-            ->setParameter('id', (string) $productId)
+            ->setParameter('id', (string) $id)
             ->getQuery()->getOneOrNullResult();
     }
 

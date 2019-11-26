@@ -11,8 +11,8 @@ final class ProductFormModel
     /**
      * @var string
      *
-     * @Assert\NotBlank()
-     * @Assert\Regex(pattern="/[0-9]*\.[0-9]{2}/" message="Amount should be given in format \"000.00\"")
+     * @Assert\NotBlank(message="Amount should not be empty")
+     * @Assert\Regex(pattern="/[0-9]*\.[0-9]{2}/", message="Amount should be given in format '000.00'")
      */
     public $price;
 

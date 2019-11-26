@@ -10,16 +10,18 @@ use KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\Product;
 /**
  * @ORM\Entity()
  */
-final class OrderItem
+class OrderItem
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Order", inversedBy="orderItem")
+     * @ORM\Id()
+     * @ORM\ManyToOne(targetEntity="Order", inversedBy="orderItem", cascade={"persist"})
      * @var Order
      */
     private $order;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Product", inversedBy="orderItem")
+     * @ORM\Id()
+     * @ORM\ManyToOne(targetEntity="KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\Product")
      * @var Product
      */
     private $product;
@@ -63,6 +65,11 @@ final class OrderItem
         return $this->order;
     }
 
+    public function getTotal(): Price
+    {
+        return new Price($this->amount*$this->quantity, $this->currency);
+    }
+
     public function getPrice(): Price
     {
         return new Price($this->amount, $this->currency);
@@ -78,7 +85,13 @@ final class OrderItem
         return $this->quantity;
     }
 
-    public function setPrice(Price $price): self
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
+        return $this;
+    }
+
+    private function setPrice(Price $price): self
     {
         $this->amount = $price->getAmount();
         $this->currency = $price->getCurrency();

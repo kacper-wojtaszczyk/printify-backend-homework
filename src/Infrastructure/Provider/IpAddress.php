@@ -32,7 +32,7 @@ class IpAddress implements ValueObject
 
     public function isValid(string $ip): bool
     {
-        return filter_var($ip, FILTER_VALIDATE_IP);
+        return filter_var($ip, FILTER_VALIDATE_IP) === $ip;
     }
 
     public function __toString(): string

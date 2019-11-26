@@ -38,6 +38,7 @@
                 <directory suffix="Exception.php">src</directory>
                 <directory suffix="Interface.php">src</directory>
                 <directory>src/DependencyInjection</directory>
+                <directory>src/Infrastructure/Repository</directory>
                 <file>src/Kernel.php</file>
             </exclude>
         </whitelist>

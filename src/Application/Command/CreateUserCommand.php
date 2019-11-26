@@ -85,7 +85,7 @@ final class CreateUserCommand extends Command
 
     private function askForPassword(QuestionHelper $helper, InputInterface $input, OutputInterface $output): string
     {
-        $question = new Question('Enter user password (min. 8 char.): ');
+        $question = new Question('Enter user password (min. 8 char.): ', "");
         $question->setHidden(true);
         $question->setHiddenFallback(true);
 

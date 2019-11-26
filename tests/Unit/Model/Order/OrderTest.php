@@ -37,33 +37,22 @@ class OrderTest extends KernelTestCase
      */
     private $productRepository;
 
-    /**
-     * @var UserRepositoryInterface|UserRepositoryMock
-     */
-    private $userRepository;
-
 
     public function setUp(): void
     {
         $kernel = self::bootKernel();
         $this->faker = Factory::create();
         $this->productRepository = $kernel->getContainer()->get(ProductRepository::class);
-        $this->userRepository = $kernel->getContainer()->get(UserRepository::class);
-
     }
 
     public function testInitializeOrder()
     {
         $orderId = OrderId::generate();
-        $userId = UserId::fromString($this->userRepository->getKeys()[0]);
-        $user = $this->userRepository->findOneByUserId($userId);
         $country = new Country('US');
         $order = Order::withParameters($orderId, $country);
-        $order->setUser($user);
 
         $this->assertTrue($order->getId()->equals($orderId));
         $this->assertTrue($order->getCountry()->equals($country));
-        $this->assertInstanceOf(User::class, $order->getUser());
     }
 
     public function testOrderWithItems()
@@ -78,11 +67,10 @@ class OrderTest extends KernelTestCase
             $quantity = $this->faker->numberBetween(1,10);
 
             $orderItem = OrderItem::withParameters($order, $product, $price, $quantity);
-            $items->add($orderItem);
+            $order->addOrderItem($orderItem);
             $counter++;
         }
 
-        $order->setOrderItem($items);
 
         $this->assertTrue($order->getOrderItem()->count() === $counter);
 
@@ -90,7 +78,7 @@ class OrderTest extends KernelTestCase
         $orderItem = $order->getOrderItem()->first();
 
         $this->assertInstanceOf(Product::class, $orderItem->getProduct());
-        $this->assertInstanceOf(Price::class, $orderItem->getPrice());
+        $this->assertInstanceOf(Price::class, $orderItem->getTotal());
         $this->assertInstanceOf(Order::class, $orderItem->getOrder());
         $this->assertIsInt($orderItem->getQuantity());
     }
@@ -108,11 +96,8 @@ class OrderTest extends KernelTestCase
     private function createOrder(): Order
     {
         $orderId = OrderId::generate();
-        $userId = UserId::fromString($this->userRepository->getKeys()[0]);
-        $user = $this->userRepository->findOneByUserId($userId);
         $country = new Country('US');
         $order = Order::withParameters($orderId, $country);
-        $order->setUser($user);
         return $order;
     }
 

@@ -1,8 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Provider;
+namespace KacperWojtaszczyk\PrintifyBackendHomework\Tests\Mock\Infrastructure\Provider;
 
+use KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Provider\CountryProviderInterface;
+use KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Provider\IpAddress;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\Order\Country;
 
 class CountryProviderMock implements CountryProviderInterface

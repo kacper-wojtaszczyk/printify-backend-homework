@@ -11,7 +11,7 @@ use KacperWojtaszczyk\PrintifyBackendHomework\Model\Price;
 /**
  * @ORM\Entity(repositoryClass="KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Repository\Product\ProductRepository")
  */
-final class Product
+class Product
 {
     /**
      * @ORM\Id()
@@ -50,11 +50,6 @@ final class Product
      */
     private $size;
 
-    /**
-     * @ORM\OneToMany(targetEntity="OrderItem", mappedBy="product")
-     * @var ArrayCollection|OrderItem[]
-     */
-    private $orderItem;
 
 
     public static function withParameters(

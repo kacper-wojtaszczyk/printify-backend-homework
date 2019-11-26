@@ -6,5 +6,5 @@ lexik_jwt_authentication:
     token_extractors:
         authorization_header:
             enabled: true
-            prefix:  '' # removing prefix due to swagger issue - not adding Bearer prefix to header
+            prefix:  ''
             name: 'Authorization'

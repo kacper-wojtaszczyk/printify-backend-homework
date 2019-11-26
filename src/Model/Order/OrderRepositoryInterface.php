@@ -13,4 +13,5 @@ interface OrderRepositoryInterface
     public function findOneById(OrderId $id): ?Order;
     public function findAll(): ?ArrayCollection;
     public function findByProductType(ProductType $type): ?ArrayCollection;
+    public function save(Order $order): void;
 }

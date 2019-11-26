@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace KacperWojtaszczyk\PrintifyBackendHomework\Model;
 
+use KacperWojtaszczyk\PrintifyBackendHomework\Model\Exception\IncompatibleCurrenciesException;
 use KacperWojtaszczyk\PrintifyBackendHomework\Model\ValueObject;
 use Money\Currency;
 use Money\Money;
@@ -33,7 +34,7 @@ final class Price implements ValueObject
 
     public function __toString(): string
     {
-        return $this->getMoney()->getAmount() . " " . $this->getMoney()->getCurrency()->getCode();
+        return number_format($this->getMoney()->getAmount()/100, 2, '.', '');
     }
 
     public function getAmount()
@@ -57,5 +58,14 @@ final class Price implements ValueObject
             return false;
         }
         return ($this->getAmount() === $other->getAmount()) && ($this->getCurrency() === $other->getCurrency());
+    }
+
+    public function add(Price $other): self
+    {
+        if(!$other->getCurrency() === $this->getCurrency())
+        {
+            throw IncompatibleCurrenciesException::withCurrencies($other->getCurrency(), $this->getCurrency());
+        }
+        return new self($other->getAmount()+$this->getAmount(), $this->getCurrency());
     }
 }

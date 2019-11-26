@@ -7,6 +7,16 @@ services:
     KacperWojtaszczyk\PrintifyBackendHomework\Tests\Mock\Infrastructure\Repository\Product\ProductRepositoryMock: ~
     KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Repository\Product\ProductRepository: '@KacperWojtaszczyk\PrintifyBackendHomework\Tests\Mock\Infrastructure\Repository\Product\ProductRepositoryMock'
 
+    KacperWojtaszczyk\PrintifyBackendHomework\Tests\Mock\Infrastructure\Repository\Order\OrderRepositoryMock:
+        arguments:
+            - '@KacperWojtaszczyk\PrintifyBackendHomework\Tests\Mock\Infrastructure\Repository\Product\ProductRepositoryMock'
+    KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Repository\Order\OrderRepository: '@KacperWojtaszczyk\PrintifyBackendHomework\Tests\Mock\Infrastructure\Repository\Order\OrderRepositoryMock'
+
+    KacperWojtaszczyk\PrintifyBackendHomework\Tests\Mock\Infrastructure\Repository\Order\OrderRequestRepositoryMock: ~
+    KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Repository\Order\OrderRequestRepository: '@KacperWojtaszczyk\PrintifyBackendHomework\Tests\Mock\Infrastructure\Repository\Order\OrderRequestRepositoryMock'
+
     KacperWojtaszczyk\PrintifyBackendHomework\Tests\Mock\Infrastructure\Repository\User\UserRepositoryMock: ~
     KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Repository\User\UserRepository: '@KacperWojtaszczyk\PrintifyBackendHomework\Tests\Mock\Infrastructure\Repository\User\UserRepositoryMock'
 
+    KacperWojtaszczyk\PrintifyBackendHomework\Tests\Mock\Infrastructure\Provider\CountryProviderMock: ~
+    KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Provider\ApilityCountryProvider: '@KacperWojtaszczyk\PrintifyBackendHomework\Tests\Mock\Infrastructure\Provider\CountryProviderMock'

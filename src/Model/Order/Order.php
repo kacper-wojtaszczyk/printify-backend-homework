@@ -4,13 +4,15 @@ declare(strict_types=1);
 namespace KacperWojtaszczyk\PrintifyBackendHomework\Model\Order;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use KacperWojtaszczyk\PrintifyBackendHomework\Model\User\User;
+use KacperWojtaszczyk\PrintifyBackendHomework\Model\Price;
 
 /**
  * @ORM\Entity(repositoryClass="KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Repository\Order\OrderRepository")
+ * @ORM\Table(name="`order`")
  */
-final class Order
+class Order implements \JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -26,16 +28,11 @@ final class Order
     private $country;
 
     /**
-     * @ORM\OneToMany(targetEntity="OrderItem", mappedBy="order")
-     * @var ArrayCollection|OrderItem[]
+     * @ORM\OneToMany(targetEntity="OrderItem", mappedBy="order", cascade={"persist", "remove"})
+     * @var Collection|OrderItem[]
      */
     private $orderItem;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User")
-     * @var User
-     */
-    private $user;
 
     public static function withParameters(
         OrderId $orderId,
@@ -45,6 +42,7 @@ final class Order
         $self = new self;
         $self->id = (string) $orderId;
         $self->country = (string) $country;
+        $self->orderItem = new ArrayCollection();
         return $self;
     }
 
@@ -58,26 +56,53 @@ final class Order
         return new Country($this->country);
     }
 
-    public function getOrderItem(): ArrayCollection
+    public function getOrderItem(): Collection
     {
         return $this->orderItem;
     }
 
-    public function setOrderItem(ArrayCollection $orderItem): self
+    public function addOrderItem(OrderItem $orderItem): self
     {
-        $this->orderItem = $orderItem;
+        if($temp = $this->orderItem->get((string)$orderItem->getProduct()->getId()))
+        {
+            $orderItem->setQuantity($orderItem->getQuantity() + $temp->getQuantity());
+            $this->orderItem->set((string)$orderItem->getProduct()->getId(), $orderItem);
+        }
+        $this->orderItem->set((string)$orderItem->getProduct()->getId(), $orderItem);
         return $this;
     }
 
-    public function getUser(): User
+    public function getTotal(): ?Price
     {
-        return $this->user;
+        $total = null;
+        foreach($this->orderItem as $item)
+        {
+            if($total === null)
+            {
+                $total = $item->getTotal();
+            } else
+            {
+                $total = $total->add($item->getTotal());
+            }
+        }
+        return $total;
     }
 
-    public function setUser(User $user): self
+    public function jsonSerialize()
     {
-        $this->user = $user;
-        return $this;
+        $items = [];
+        foreach ($this->getOrderItem() as $item)
+        {
+            $items[] = [
+                'productId' => (string) $item->getProduct()->getId(),
+                'price' => (string) $item->getPrice(),
+                'quantity' => $item->getQuantity()
+            ];
+        }
+        return[
+            'id' => (string) $this->getId(),
+            'total' => (string) $this->getTotal(),
+            'items' => $items
+        ];
     }
-
 }

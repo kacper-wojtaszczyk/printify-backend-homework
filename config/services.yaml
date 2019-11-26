@@ -6,6 +6,7 @@
 parameters:
     currency: '%env(CURRENCY)%'
     fallback_country: 'US'
+    limit_per_second_per_country: 10
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -21,11 +22,21 @@ services:
             - '@form.factory'
             - '@KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\ProductRepositoryInterface'
             - '%currency%'
+        tags: ['controller.service_arguments']
 
-    KacperWojtaszczyk\PrintifyBackendHomework\Application\Controller\Rest\Order: ~
+    KacperWojtaszczyk\PrintifyBackendHomework\Application\Controller\Rest\Order:
+        arguments:
+            - '@form.factory'
+            - '@KacperWojtaszczyk\PrintifyBackendHomework\Model\Product\ProductRepositoryInterface'
+            - '@KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Provider\CountryProviderInterface'
+            - '@KacperWojtaszczyk\PrintifyBackendHomework\Model\Order\OrderRequestRepositoryInterface'
+            - '@KacperWojtaszczyk\PrintifyBackendHomework\Model\Order\OrderRepositoryInterface'
+            - '%limit_per_second_per_country%'
+        tags: ['controller.service_arguments']
 
     KacperWojtaszczyk\PrintifyBackendHomework\Infrastructure\Provider\ApilityCountryProvider:
         arguments:
             - '@eight_points_guzzle.client.apility'
+            - '%fallback_country%'
 
 
